@@ -9,7 +9,6 @@ class ServerThread extends Thread {
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
 
-
     private final LocalTime ORA_LIMITE = LocalTime.of(22, 0);
 
     public ServerThread(Socket socket) {
@@ -18,7 +17,7 @@ class ServerThread extends Thread {
 
     public void run() {
         try {
-            comunica();
+            comunica();  
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -31,14 +30,17 @@ class ServerThread extends Thread {
         String messaggioRicevuto;
 
         for (;;) {
-            messaggioRicevuto = inDalClient.readLine();
+            messaggioRicevuto = inDalClient.readLine(); 
+
             if (messaggioRicevuto == null || messaggioRicevuto.equalsIgnoreCase("FINE")) {
                 outVersoClient.writeBytes("Connessione chiusa.\n");
                 break;
             }
 
             System.out.println("Messaggio ricevuto: " + messaggioRicevuto);
+
             String risposta = elaboraMessaggio(messaggioRicevuto);
+
             outVersoClient.writeBytes(risposta + "\n");
         }
 
@@ -82,7 +84,7 @@ class ServerThread extends Thread {
     }
 }
 
-public class MultiServer {
+public class Server {
     public void start() {
         try {
             ServerSocket serverSocket = new ServerSocket(6789);
@@ -90,7 +92,7 @@ public class MultiServer {
 
             for (;;) {
                 System.out.println("In attesa di connessioni...");
-                Socket socket = serverSocket.accept();
+                Socket socket = serverSocket.accept(); 
                 System.out.println("Client connesso: " + socket);
 
                 ServerThread serverThread = new ServerThread(socket);
@@ -102,8 +104,9 @@ public class MultiServer {
         }
     }
 
+   
     public static void main(String[] args) {
-        MultiServer tcpServer = new MultiServer();
-        tcpServer.start();
+        Server tcpServer = new Server();
+        tcpServer.start(); 
     }
 }
