@@ -13,18 +13,34 @@ public class Temperatura {
   BufferedReader inDalServer;                      
 
   public void comunica() {
-    for (;;)                                     
-    try{
-      //devo scrivere le operazioni
-    } 
-    catch (Exception e) 
-    {
-      System.out.println(e.getMessage());
-      System.out.println("Errore durante la comunicazione col server!");
-      System.exit(1);
+    for (;;) {
+        try {
+            // leggo una riga da tastiera
+            System.out.println("Inserisci temperatura (oppure FINE per uscire): ");
+            stringaUtente = tastiera.readLine();
+
+            // se l'utente vuole chiudere
+            if (stringaUtente.equalsIgnoreCase("FINE")) {
+                System.out.println("Chiusura del client...");
+                miosocket.close();
+                break;
+            }
+
+            // invio la temperatura al server
+            outVersoServer.writeBytes(stringaUtente + "\n");
+
+            // attendo la risposta dal server
+            stringaRicevutaDalServer = inDalServer.readLine();
+            System.out.println("Risposta dal server: " + stringaRicevutaDalServer);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Errore durante la comunicazione col server!");
+            System.exit(1);
+        }
     }
-  }
-  
+}
+
   public Socket connetti(){
     System.out.println("2 CLIENT partito in esecuzione ...");
     try{
