@@ -10,7 +10,7 @@ public class Movimento {
   int portaServer   = 6789;               
   Socket miosocket;                
   Scanner tastiera;                 
-  String id;
+  String id="01";
   String tipo="movimento";
   boolean valore;              
   String zona;
@@ -21,8 +21,6 @@ public class Movimento {
   public void comunica() {
     for (;;)                                    
     try{
-    	outVersoServer.writeBytes("Tipo: "+tipo);
-    	
     	String risp;
     	do {
     		System.out.println("È stato rivelato un movimento?");
@@ -36,15 +34,12 @@ public class Movimento {
     		valore=false;
     	}
     	
-    	outVersoServer.writeBytes("Valore:"+valore);
-    	
     	
     	String zona;
     	do {
     		System.out.println("In che zona è stato rilevato il movimento?");
     		zona=tastiera.nextLine();
     	}while(!zona.equalsIgnoreCase("giardino") || !zona.equalsIgnoreCase("cucina") || !zona.equalsIgnoreCase("bagno"));
-    	outVersoServer.writeBytes("Zona: "+zona);
     	
     	
     	int ore, minuti;
@@ -57,8 +52,15 @@ public class Movimento {
     		minuti=tastiera.nextInt();
     	}while(minuti<0 || minuti>59);
    		ora=LocalTime.of(ore, minuti);
-   		outVersoServer.writeBytes("Ora: "+ora);	
-    	
+   		
+   		outVersoServer.writeBytes("Id: "+id+",\nTipo: "+tipo+",\nValore: "+valore+",\nZona: "+zona+",\nOra: "+ora);
+   		System.out.println("Risposta del server: "+inDalServer.readLine());
+   		
+   		System.out.println("Inserisci 'FINE' se vuoi chiudere la connessione");
+   		String finito=tastiera.nextLine();
+   		if(finito.equalsIgnoreCase("FINE")) {
+   			miosocket.close();
+   		}
     } 
     catch (Exception e) 
     {
