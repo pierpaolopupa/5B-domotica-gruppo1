@@ -10,6 +10,17 @@ public class ContattoPorta {
   DataOutputStream outVersoServer;                 // stream di output
   BufferedReader inDalServer;                      // stream di input 
   String id;
+  boolean valoreC;
+  boolean conttato;
+  String zona;
+
+  public ContattoPorta(String id, String valoreC, boolean contatto, String zona) {
+        this.id= id;
+        this.tipo = tipo;
+        this.contatto = valore;
+        this.zona = zona;
+    }
+
   
 
   public void comunica() {
