@@ -7,10 +7,21 @@ public class ContattoPorta {
   int portaServer   = 6789;                        // porta x servizio data e ora
   Socket miosocket;                                
   BufferedReader tastiera;                         // buffer per l'input da tastiera
-  String stringaUtente;                            // stringa inserita da utente
-  String stringaRicevutaDalServer;                 // stringa ricevuta dal server
   DataOutputStream outVersoServer;                 // stream di output
   BufferedReader inDalServer;                      // stream di input 
+  String id;
+  boolean valoreC;
+  boolean conttato;
+  String zona;
+
+  public ContattoPorta(String id, String valoreC, boolean contatto, String zona) {
+        this.id= id;
+        this.tipo = tipo;
+        this.contatto = valore;
+        this.zona = zona;
+    }
+
+  
 
   public void comunica() {
     for (;;)                                     // ciclo infinito: termina con FINE
