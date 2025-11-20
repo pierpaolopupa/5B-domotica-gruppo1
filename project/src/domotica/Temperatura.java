@@ -4,12 +4,14 @@ import java.net.*;
 
 public class Temperatura {
 
-    String nomeServer = "localhost";               
-    int portaServer = 6789;                        
+    String nomeServer = "localhost";
+    int portaServer = 6789;
     Socket miosocket;
     BufferedReader tastiera;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
+
+    String ID = "001"; 
 
     public void comunica() {
         try {
@@ -25,16 +27,15 @@ public class Temperatura {
                     break;
                 }
 
-                
                 try {
-                    Double.parseDouble(input);   
+                    Double.parseDouble(input);
                 } catch (NumberFormatException e) {
                     System.out.println("Inserire un numero valido!");
                     continue;
                 }
 
                 
-                outVersoServer.writeBytes("TEMP: " + input + "\n");
+                outVersoServer.writeBytes("ID: " + ID + " | TEMP: " + input + "\n");
 
                 String risposta = inDalServer.readLine();
                 System.out.println("Risposta dal server: " + risposta);
@@ -64,5 +65,6 @@ public class Temperatura {
         cliente.comunica();
     }
 }
+
 
 
